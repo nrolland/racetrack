@@ -15,8 +15,10 @@ intersects ((x1,y1), (x2,y2)) ((x3,y3), (x4,y4)) =
           numerator2  = (x2-x1)*(y1-y3) - (y2-y1)*(x1-x3)
           u1 = numerator1 / denominator
           u2 = numerator2 / denominator
-          
 
+completes :: CarState -> Point -> Track -> Bool
+completes (start,_) end Track{..} =
+     intersects (start,end) finishLine
              
 crashes :: CarState -> Point -> Track -> Bool
 crashes (start,_) end Track{..} =
