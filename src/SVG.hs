@@ -5,7 +5,7 @@ import Text.Blaze.Svg11 as S
 import Text.Blaze.Svg11.Attributes as A
 import Text.Blaze.Svg.Renderer.String (renderSvg)
 import Data.String (fromString)
---import Types
+import Types
 
 
 renderLine :: String -> Line -> Svg

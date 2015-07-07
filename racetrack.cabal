@@ -20,7 +20,7 @@ Library
   ghc-options:         -Wall
   -- other-modules:       
   -- other-extensions:
-  exposed-modules:      SVG, Types, Parser
+  exposed-modules:      SVG, Types, Parser, Render
   build-depends:         base >=4.7
                        , flow ==1.*
                        , blaze-svg
