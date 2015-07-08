@@ -4,17 +4,18 @@ module Main where
 import Types
 import Render
 import Mechanics
+import Data.Char
 
 add (x,y) (dx,dy) = (x+dx,y+dy)
 
 acceleration =
     let stg = [(x,y) | y<-[-1,0,1], x<-[-1,0,1]]
-    in \input -> stg !! (input - 1)
+    in \input -> stg !! input
     
 gameLoop :: Track -> Trace -> CarState -> IO ()
 gameLoop track trace car@(start, velocity)  = do
   raceToSvg "file.svg" track [ trace ]
-  input :: Int <- getChar
+  input :: Int <- getChar >>= \ch -> return (ord ch - 49)  
   let newvelocity = add velocity (acceleration input)
   let newposition = add start newvelocity
   if crashes car newposition track then
