@@ -5,6 +5,9 @@ import Types
 import Render
 import Mechanics
 import Data.Char
+import System.Environment
+import Parser
+import Debug.Trace as D
 
 add (x,y) (dx,dy) = (x+dx,y+dy)
 
@@ -15,9 +18,11 @@ acceleration =
 gameLoop :: Track -> Trace -> CarState -> IO ()
 gameLoop track trace car@(start, velocity)  = do
   raceToSvg "file.svg" track [ trace ]
-  input :: Int <- getChar >>= \ch -> return (ord ch - 49)  
-  let newvelocity = add velocity (acceleration input)
-  let newposition = add start newvelocity
+  input :: Int <- getChar >>= \ch -> return (  (ord ch - 49))
+  let newvelocity = D.trace ("input " ++ show input)
+                    add velocity (acceleration input)
+  let newposition = D.trace ("newvelocity " ++ show newvelocity)
+                    add start newvelocity
   if crashes car newposition track then
       putStrLn "You crashed !!!"
   else if completes car newposition track then
@@ -27,4 +32,7 @@ gameLoop track trace car@(start, velocity)  = do
  
 
 main :: IO ()
-main = putStrLn "Hello, world!"
+main = do
+  args <- getArgs
+  track <- readFile (head args) >>= return . readTrack
+  gameLoop track [] (startingPoint track, (0,0))

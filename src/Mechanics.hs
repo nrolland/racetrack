@@ -3,6 +3,7 @@
 module Mechanics where
 
 import Types
+import Debug.Trace as D    
 --import Data.Foldable
 
 intersects :: Line → Line → Bool
@@ -22,4 +23,5 @@ completes (start,_) end Track{..} =
              
 crashes :: CarState -> Point -> Track -> Bool
 crashes (start,_) end Track{..} =
+    D.trace ("start end  " ++ show (start,end))
     any (intersects (start,end)) boundaries 
