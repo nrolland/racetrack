@@ -24,4 +24,5 @@ completes (start,_) end Track{..} =
 crashes :: CarState -> Point -> Track -> Bool
 crashes (start,_) end Track{..} =
     D.trace ("start end  " ++ show (start,end))
+    D.trace ("culprit line " ++ show (start,end))
     any (intersects (start,end)) boundaries 

@@ -5,8 +5,8 @@ module Render where
 import SVG
 import Types
     
-raceToSvg :: FilePath -> Track -> [ Trace ] -> IO ()
-raceToSvg filePath Track{..} traces =
+raceToSvg :: FilePath -> Track -> (Point,[Point]) -> [ Trace ] -> IO ()
+raceToSvg filePath Track{..} (carPosition, carPotentialPositions) traces =
     let svgTraces =
             map (renderLine "green") linesFromTraces
             where
@@ -14,10 +14,11 @@ raceToSvg filePath Track{..} traces =
               linesFromTrace trace = zip trace (tail trace)
         svgTrack  = map (renderLine "black") boundaries
         svgFinish = renderLine "yellow"  finishLine
+        svgPotentialMoves =  map (renderLine "blue") $ map (\i -> (carPosition, i)) carPotentialPositions 
     in
       linesToSvg filePath
                  (truncate  xmin,truncate ymin, ceiling xmax,ceiling ymax)
-                 (svgTraces ++ svgTrack ++ [svgFinish])
+                 (svgTraces ++ svgTrack ++ [svgFinish] ++ svgPotentialMoves)
       where
          (xmin,ymin,xmax,ymax) = boundingBox boundaries
          boundingBox lines = foldr1 maxBox $ map dimension lines

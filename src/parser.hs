@@ -15,6 +15,7 @@ readInt str = case reads str of
 
 readTrack :: String -> Track
 readTrack str =
+    
     let (startingPoint: finishLine: boundaries) = lines str
     in Track (map readLine boundaries)
              (readPoint startingPoint)
