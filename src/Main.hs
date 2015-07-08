@@ -14,7 +14,7 @@ acceleration =
 gameLoop :: Track -> Trace -> CarState -> IO ()
 gameLoop track trace car@(start, velocity)  = do
   raceToSvg "file.svg" track [ trace ]
-  input :: Int <- readLn
+  input :: Int <- getChar
   let newvelocity = add velocity (acceleration input)
   let newposition = add start newvelocity
   if crashes car newposition track then
